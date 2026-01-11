@@ -38,8 +38,15 @@ const subcategoryLabels = {
         <nav class="nav-desktop">
           <a href="/vibecraft-web/" class="nav-link">홈</a>
           <a href="/vibecraft-web/#services" class="nav-link">서비스</a>
-          <a href="/vibecraft-web/projects" class="nav-link active">프로젝트</a>
           <a href="/vibecraft-web/#contact" class="nav-link">소개</a>
+          <div class="nav-dropdown">
+            <button class="nav-link nav-dropdown-trigger active">프로젝트 <span class="dropdown-arrow">▾</span></button>
+            <div class="nav-dropdown-menu">
+              <a href="/vibecraft-web/projects" class="dropdown-item">전체 보기</a>
+              <a href="/vibecraft-web/projects?category=consulting" class="dropdown-item">컨설팅</a>
+              <a href="/vibecraft-web/projects?category=development" class="dropdown-item">개발 외주</a>
+            </div>
+          </div>
         </nav>
         <div class="header-actions">
           <a href="https://docs.google.com/forms/d/e/1FAIpQLScPYEgY-bhxM31JWZsoHIaNdFGE-Dy3HJjn41500A0O7IeeOQ/viewform" target="_blank" rel="noopener" class="btn-contact">상담 신청 →</a>
@@ -221,6 +228,14 @@ ul,ol{list-style:none}
 .nav-link{padding:0.5rem 1rem;border-radius:var(--radius-md);font-size:0.9rem;font-weight:500;color:var(--text-secondary);transition:var(--transition-fast);cursor:pointer;background:transparent;border:none}
 .nav-link:hover,.nav-link.active{color:var(--text-primary);background:rgba(255,255,255,0.05)}
 .nav-link.active{color:var(--brand-primary)}
+.nav-dropdown{position:relative}
+.nav-dropdown-trigger{display:flex;align-items:center;gap:0.25rem}
+.dropdown-arrow{font-size:0.7rem;transition:var(--transition-fast)}
+.nav-dropdown:hover .dropdown-arrow{transform:rotate(180deg)}
+.nav-dropdown-menu{position:absolute;top:100%;right:0;min-width:160px;padding:0.5rem;background:rgba(20,16,24,0.95);backdrop-filter:blur(20px);border:1px solid var(--border-subtle);border-radius:var(--radius-md);opacity:0;visibility:hidden;transform:translateY(8px);transition:var(--transition-fast);z-index:200}
+.nav-dropdown:hover .nav-dropdown-menu{opacity:1;visibility:visible;transform:translateY(4px)}
+.dropdown-item{display:block;padding:0.625rem 1rem;border-radius:var(--radius-sm);font-size:0.875rem;color:var(--text-secondary);transition:var(--transition-fast)}
+.dropdown-item:hover{color:var(--text-primary);background:rgba(255,255,255,0.05)}
 .header-actions{display:flex;align-items:center;gap:0.75rem}
 .btn-contact{display:none;padding:0.625rem 1.25rem;background:linear-gradient(135deg,var(--brand-primary),var(--brand-secondary));border-radius:var(--radius-md);font-size:0.875rem;font-weight:600;color:white;transition:var(--transition-fast)}
 .btn-contact:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(255,107,74,0.3)}
