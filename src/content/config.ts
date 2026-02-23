@@ -5,38 +5,25 @@ const projects = defineCollection({
   schema: z.object({
     title: z.string(),
     summary: z.string(),
-    client: z.string(),
-    period: z.string(),
-    status: z.enum(['completed', 'in-progress', 'planned']),
-    featured: z.boolean().default(false),
-    thumbnail: z.string().optional(),
-    serviceType: z.enum([
-      'web-development',
-      'app-development',
-      'data-ai',
-      'automation',
-      'consulting',
-    ]),
-    industry: z.enum([
-      'fnb',
-      'fintech',
-      'healthcare',
-      'education',
-      'blockchain',
-      'ecommerce',
-      'saas',
-      'government',
-      'general',
-    ]),
-    techStack: z.array(z.string()).default([]),
-    metrics: z
-      .array(
-        z.object({
-          label: z.string(),
-          value: z.string(),
-        })
+    company: z.string().default(''),
+    field: z.array(z.string()).default([]),
+    tech: z.array(z.string()).default([]),
+    team: z.array(z.string()).default([]),
+    period_start: z
+      .union([z.string(), z.date()])
+      .transform((val) =>
+        val instanceof Date ? val.toISOString().split('T')[0] : val
       )
       .optional(),
+    period_end: z
+      .union([z.string(), z.date()])
+      .transform((val) =>
+        val instanceof Date ? val.toISOString().split('T')[0] : val
+      )
+      .optional(),
+    cover: z.string().optional(),
+    notion_id: z.string().optional(),
+    featured: z.boolean().default(false),
   }),
 });
 

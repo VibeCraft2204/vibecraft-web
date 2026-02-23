@@ -8,41 +8,36 @@ import ProjectCard from '../../components/ProjectCard.astro';
 const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 const allProjects = await getCollection('projects');
 
-// Extract unique values for filters
-const serviceTypes = [...new Set(allProjects.map((p) => p.data.serviceType))].sort();
-const industries = [...new Set(allProjects.map((p) => p.data.industry))].sort();
-const allTechStacks = [...new Set(allProjects.flatMap((p) => p.data.techStack))].sort();
+// Extract unique field values for filters
+const allFields = [...new Set(allProjects.flatMap((p) => p.data.field))].sort();
+const allTechStacks = [...new Set(allProjects.flatMap((p) => p.data.tech))].sort();
+const allCompanies = [...new Set(allProjects.map((p) => p.data.company).filter(Boolean))].sort();
 
-const serviceLabels: Record<string, string> = {
-  'web-development': '웹 개발',
-  'app-development': '앱 개발',
-  'data-ai': '데이터/AI',
-  automation: '자동화',
-  consulting: '컨설팅',
+const fieldLabels: Record<string, string> = {
+  'B/E': '백엔드',
+  'F/E': '프론트엔드',
+  DB: '데이터베이스',
+  AI: 'AI/ML',
+  Data: '데이터',
+  DevOps: 'DevOps',
+  IoT: 'IoT',
+  'APP(Android)': 'Android',
+  'APP(Cross Platform)': '크로스플랫폼',
+  '특허': '특허',
 };
 
-const industryLabels: Record<string, string> = {
-  fnb: 'F&B',
-  fintech: '핀테크',
-  healthcare: '헬스케어',
-  education: '교육',
-  blockchain: '블록체인',
-  ecommerce: '이커머스',
-  saas: 'SaaS',
-  government: '공공',
-  general: '일반',
-};
-
-// Sort: featured first, then by period descending
+// Sort: featured first, then by period_start descending
 const sortedProjects = allProjects.sort((a, b) => {
   if (a.data.featured !== b.data.featured) return a.data.featured ? -1 : 1;
-  return a.data.period > b.data.period ? -1 : 1;
+  const aDate = a.data.period_start || '0000';
+  const bDate = b.data.period_start || '0000';
+  return aDate > bDate ? -1 : 1;
 });
 ---
 
 <PageLayout
   title="Work — VibeCraft"
-  description="VibeCraft의 프로젝트 포트폴리오. 웹 개발, 앱 개발, 데이터/AI 등 50+ 프로젝트를 확인하세요."
+  description="VibeCraft의 프로젝트 포트폴리오. 웹 개발, 앱 개발, 데이터/AI 등 다양한 프로젝트를 확인하세요."
 >
   <section class="page-hero">
     <div class="container">
@@ -57,13 +52,13 @@ const sortedProjects = allProjects.sort((a, b) => {
   <section class="filter-section">
     <div class="container">
       <div class="filter-group">
-        <span class="filter-label">서비스</span>
-        <div class="filter-buttons" data-axis="service">
+        <span class="filter-label">분야</span>
+        <div class="filter-buttons" data-axis="field">
           <button class="filter-btn active" data-value="all">All</button>
           {
-            serviceTypes.map((st) => (
-              <button class="filter-btn" data-value={st}>
-                {serviceLabels[st] || st}
+            allFields.map((f) => (
+              <button class="filter-btn" data-value={f}>
+                {fieldLabels[f] || f}
               </button>
             ))
           }
@@ -71,13 +66,13 @@ const sortedProjects = allProjects.sort((a, b) => {
       </div>
 
       <div class="filter-group">
-        <span class="filter-label">산업</span>
-        <div class="filter-buttons" data-axis="industry">
+        <span class="filter-label">회사</span>
+        <div class="filter-buttons" data-axis="company">
           <button class="filter-btn active" data-value="all">All</button>
           {
-            industries.map((ind) => (
-              <button class="filter-btn" data-value={ind}>
-                {industryLabels[ind] || ind}
+            allCompanies.map((c) => (
+              <button class="filter-btn" data-value={c}>
+                {c}
               </button>
             ))
           }
@@ -117,16 +112,17 @@ const sortedProjects = allProjects.sort((a, b) => {
           sortedProjects.map((project) => (
             <div
               class="project-item"
-              data-service={project.data.serviceType}
-              data-industry={project.data.industry}
-              data-tech={project.data.techStack.join(',')}
+              data-field={project.data.field.join(',')}
+              data-company={project.data.company}
+              data-tech={project.data.tech.join(',')}
             >
               <ProjectCard
                 title={project.data.title}
                 summary={project.data.summary}
-                techStack={project.data.techStack}
+                tech={project.data.tech}
                 slug={project.slug}
-                serviceType={project.data.serviceType}
+                field={project.data.field}
+                cover={project.data.cover}
               />
             </div>
           ))
@@ -342,8 +338,8 @@ const sortedProjects = allProjects.sort((a, b) => {
   const ITEMS_PER_PAGE = 12;
   let visibleCount = ITEMS_PER_PAGE;
   let activeFilters: Record<string, string> = {
-    service: 'all',
-    industry: 'all',
+    field: 'all',
+    company: 'all',
     tech: 'all',
   };
 
@@ -359,16 +355,16 @@ const sortedProjects = allProjects.sort((a, b) => {
   function getMatchingItems() {
     return items.filter((item) => {
       const el = item as HTMLElement;
-      const matchService =
-        activeFilters.service === 'all' ||
-        el.dataset.service === activeFilters.service;
-      const matchIndustry =
-        activeFilters.industry === 'all' ||
-        el.dataset.industry === activeFilters.industry;
+      const matchField =
+        activeFilters.field === 'all' ||
+        (el.dataset.field || '').split(',').includes(activeFilters.field);
+      const matchCompany =
+        activeFilters.company === 'all' ||
+        el.dataset.company === activeFilters.company;
       const matchTech =
         activeFilters.tech === 'all' ||
         (el.dataset.tech || '').split(',').includes(activeFilters.tech);
-      return matchService && matchIndustry && matchTech;
+      return matchField && matchCompany && matchTech;
     });
   }
 
@@ -403,10 +399,10 @@ const sortedProjects = allProjects.sort((a, b) => {
 
     // Update URL
     const params = new URLSearchParams();
-    if (activeFilters.service !== 'all')
-      params.set('service', activeFilters.service);
-    if (activeFilters.industry !== 'all')
-      params.set('industry', activeFilters.industry);
+    if (activeFilters.field !== 'all')
+      params.set('field', activeFilters.field);
+    if (activeFilters.company !== 'all')
+      params.set('company', activeFilters.company);
     if (activeFilters.tech !== 'all') params.set('tech', activeFilters.tech);
     const search = params.toString();
     history.replaceState(
@@ -417,7 +413,7 @@ const sortedProjects = allProjects.sort((a, b) => {
   }
 
   function resetFilters() {
-    activeFilters = { service: 'all', industry: 'all', tech: 'all' };
+    activeFilters = { field: 'all', company: 'all', tech: 'all' };
     visibleCount = ITEMS_PER_PAGE;
     document.querySelectorAll('.filter-btn').forEach((btn) => {
       const el = btn as HTMLElement;
@@ -458,11 +454,11 @@ const sortedProjects = allProjects.sort((a, b) => {
 
   // Restore from URL on load
   const urlParams = new URLSearchParams(window.location.search);
-  if (urlParams.has('service')) {
-    activeFilters.service = urlParams.get('service')!;
+  if (urlParams.has('field')) {
+    activeFilters.field = urlParams.get('field')!;
   }
-  if (urlParams.has('industry')) {
-    activeFilters.industry = urlParams.get('industry')!;
+  if (urlParams.has('company')) {
+    activeFilters.company = urlParams.get('company')!;
   }
   if (urlParams.has('tech')) {
     activeFilters.tech = urlParams.get('tech')!;

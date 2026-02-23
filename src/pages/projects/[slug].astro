@@ -4,7 +4,6 @@ import PageLayout from '../../layouts/PageLayout.astro';
 import Divider from '../../components/Divider.astro';
 import SectionHeader from '../../components/SectionHeader.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
-import Stats from '../../components/Stats.astro';
 
 const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 
@@ -19,48 +18,30 @@ export async function getStaticPaths() {
 const { project } = Astro.props;
 const { Content } = await render(project);
 
-const serviceLabels: Record<string, string> = {
-  'web-development': '웹 개발',
-  'app-development': '앱 개발',
-  'data-ai': '데이터/AI',
-  automation: '자동화',
-  consulting: '컨설팅',
-};
+function formatPeriod(start?: string, end?: string): string {
+  if (!start) return '-';
+  const fmt = (d: string) => d.substring(0, 7).replace('-', '.');
+  if (end) return `${fmt(start)} — ${fmt(end)}`;
+  return `${fmt(start)} — 진행중`;
+}
 
-const industryLabels: Record<string, string> = {
-  fnb: 'F&B',
-  fintech: '핀테크',
-  healthcare: '헬스케어',
-  education: '교육',
-  blockchain: '블록체인',
-  ecommerce: '이커머스',
-  saas: 'SaaS',
-  government: '공공',
-  general: '일반',
-};
-
-const statusLabels: Record<string, string> = {
-  completed: '완료',
-  'in-progress': '진행중',
-  planned: '예정',
-};
-
-// Related projects: same serviceType, exclude current, max 3
+// Related projects: same field overlap, exclude current, max 3
 const allProjects = await getCollection('projects');
+const currentFields = new Set(project.data.field);
 const relatedProjects = allProjects
   .filter(
     (p) =>
-      p.data.serviceType === project.data.serviceType &&
-      p.slug !== project.slug
+      p.slug !== project.slug &&
+      p.data.field.some((f: string) => currentFields.has(f))
   )
   .sort(() => Math.random() - 0.5)
   .slice(0, 3);
 
 const metaGrid = [
-  { label: '클라이언트', value: project.data.client },
-  { label: '기간', value: project.data.period },
-  { label: '서비스', value: serviceLabels[project.data.serviceType] || project.data.serviceType },
-  { label: '산업', value: industryLabels[project.data.industry] || project.data.industry },
+  { label: '클라이언트', value: project.data.company || '-' },
+  { label: '기간', value: formatPeriod(project.data.period_start, project.data.period_end) },
+  { label: '분야', value: project.data.field.join(', ') || '-' },
+  { label: '팀', value: project.data.team.length > 0 ? project.data.team.join(', ') : '-' },
 ];
 ---
 
@@ -93,6 +74,13 @@ const metaGrid = [
         }
       </div>
 
+      <!-- Cover Image -->
+      {project.data.cover && (
+        <div class="cover-image">
+          <img src={`${base}${project.data.cover}`} alt={project.data.title} />
+        </div>
+      )}
+
       <Divider />
 
       <!-- Content -->
@@ -102,28 +90,14 @@ const metaGrid = [
 
       <Divider />
 
-      <!-- Metrics -->
-      {
-        project.data.metrics && project.data.metrics.length > 0 && (
-          <div class="metrics-section">
-            <Stats
-              items={project.data.metrics.map((m: { label: string; value: string }) => ({
-                number: m.value,
-                label: m.label,
-              }))}
-            />
-          </div>
-        )
-      }
-
       <!-- Tech Stack -->
       {
-        project.data.techStack.length > 0 && (
+        project.data.tech.length > 0 && (
           <div class="tech-section">
             <h3 class="tech-heading">기술 스택</h3>
             <div class="tech-list">
-              {project.data.techStack.map((tech: string) => (
-                <span class="tech-tag">{tech}</span>
+              {project.data.tech.map((t: string) => (
+                <span class="tech-tag">{t}</span>
               ))}
             </div>
           </div>
@@ -145,9 +119,10 @@ const metaGrid = [
                 <ProjectCard
                   title={rp.data.title}
                   summary={rp.data.summary}
-                  techStack={rp.data.techStack}
+                  tech={rp.data.tech}
                   slug={rp.slug}
-                  serviceType={rp.data.serviceType}
+                  field={rp.data.field}
+                  cover={rp.data.cover}
                 />
               ))}
             </div>
@@ -231,9 +206,17 @@ const metaGrid = [
     font-weight: 500;
   }
 
-  /* Metrics */
-  .metrics-section {
-    margin: 48px 0;
+  /* Cover Image */
+  .cover-image {
+    margin-bottom: 48px;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .cover-image img {
+    width: 100%;
+    height: auto;
+    display: block;
   }
 
   /* Tech Stack */

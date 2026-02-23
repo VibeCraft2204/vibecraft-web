@@ -2,21 +2,36 @@
 interface Props {
   title: string;
   summary: string;
-  techStack: string[];
+  tech: string[];
   slug: string;
-  serviceType: string;
+  field: string[];
+  cover?: string;
   index?: number;
 }
 
-const { title, summary, techStack, slug, serviceType, index = 0 } = Astro.props;
+const { title, summary, tech, slug, field, cover, index = 0 } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+
+// Derive serviceType from field for color theme
+function getServiceType(fields: string[]): string {
+  for (const f of fields) {
+    if (f.includes('APP')) return 'app-development';
+    if (f === 'AI' || f === 'Data') return 'data-ai';
+    if (f === 'DevOps' || f === 'IoT') return 'automation';
+    if (f === '특허') return 'consulting';
+  }
+  if (fields.some((f) => f === 'B/E' || f === 'F/E' || f === 'DB')) return 'web-development';
+  return 'web-development';
+}
+
+const serviceType = getServiceType(field);
 
 const serviceLabels: Record<string, string> = {
   'web-development': 'Web',
   'app-development': 'App',
   'data-ai': 'Data/AI',
-  automation: 'Auto',
-  consulting: 'Consult',
+  automation: 'DevOps',
+  consulting: 'Patent',
 };
 
 const serviceThemes: Record<string, { bg: string; gradientTo: string; text: string; accent: string }> = {
@@ -30,37 +45,47 @@ const serviceThemes: Record<string, { bg: string; gradientTo: string; text: stri
 const theme = serviceThemes[serviceType] || serviceThemes['web-development'];
 const paddedIndex = String(index).padStart(2, '0');
 const label = serviceLabels[serviceType] || 'Dev';
+const hasCover = !!cover;
 ---
 
 <a href={`${base}projects/${slug}/`} class="work-card">
-  <div class="thumb" style={`background: linear-gradient(135deg, ${theme.bg} 0%, ${theme.gradientTo} 100%);`}>
-    <div class="thumb-deco">
-      <svg width="100%" height="100%" viewBox="0 0 600 400" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
-        <circle cx="480" cy="100" r="140" stroke={theme.accent} stroke-width="0.8" opacity="0.25" />
-        <circle cx="480" cy="100" r="80" stroke={theme.accent} stroke-width="0.6" opacity="0.18" />
-        <circle cx="480" cy="100" r="30" fill={theme.accent} opacity="0.08" />
-        <line x1="0" y1="340" x2="600" y2="340" stroke={theme.accent} stroke-width="0.4" opacity="0.12" />
-        <line x1="0" y1="360" x2="400" y2="360" stroke={theme.accent} stroke-width="0.4" opacity="0.08" />
-        <rect x="60" y="280" width="100" height="2" fill={theme.accent} opacity="0.15" rx="1" />
-        <rect x="60" y="296" width="60" height="2" fill={theme.accent} opacity="0.1" rx="1" />
-      </svg>
-    </div>
-    <div class="thumb-content">
-      <div class="thumb-top">
-        <span class="thumb-label" style={`color: ${theme.text};`}>{label}</span>
-      </div>
-      <div class="thumb-bottom">
-        <span class="thumb-num" style={`color: ${theme.text};`}>{paddedIndex}</span>
-        <span class="thumb-cta" style={`color: ${theme.accent};`}>View &rarr;</span>
+  {hasCover ? (
+    <div class="thumb thumb-cover">
+      <img src={`${base}${cover}`} alt={title} loading="lazy" />
+      <div class="thumb-overlay">
+        <span class="thumb-cta" style={`color: #fff;`}>View &rarr;</span>
       </div>
     </div>
-  </div>
+  ) : (
+    <div class="thumb" style={`background: linear-gradient(135deg, ${theme.bg} 0%, ${theme.gradientTo} 100%);`}>
+      <div class="thumb-deco">
+        <svg width="100%" height="100%" viewBox="0 0 600 400" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+          <circle cx="480" cy="100" r="140" stroke={theme.accent} stroke-width="0.8" opacity="0.25" />
+          <circle cx="480" cy="100" r="80" stroke={theme.accent} stroke-width="0.6" opacity="0.18" />
+          <circle cx="480" cy="100" r="30" fill={theme.accent} opacity="0.08" />
+          <line x1="0" y1="340" x2="600" y2="340" stroke={theme.accent} stroke-width="0.4" opacity="0.12" />
+          <line x1="0" y1="360" x2="400" y2="360" stroke={theme.accent} stroke-width="0.4" opacity="0.08" />
+          <rect x="60" y="280" width="100" height="2" fill={theme.accent} opacity="0.15" rx="1" />
+          <rect x="60" y="296" width="60" height="2" fill={theme.accent} opacity="0.1" rx="1" />
+        </svg>
+      </div>
+      <div class="thumb-content">
+        <div class="thumb-top">
+          <span class="thumb-label" style={`color: ${theme.text};`}>{label}</span>
+        </div>
+        <div class="thumb-bottom">
+          <span class="thumb-num" style={`color: ${theme.text};`}>{paddedIndex}</span>
+          <span class="thumb-cta" style={`color: ${theme.accent};`}>View &rarr;</span>
+        </div>
+      </div>
+    </div>
+  )}
   <div class="card-body">
     <h3>{title}</h3>
     <p class="desc">{summary}</p>
     <div class="tags">
-      {techStack.slice(0, 4).map((tech) => (
-        <span class="tag">{tech}</span>
+      {tech.slice(0, 4).map((t) => (
+        <span class="tag">{t}</span>
       ))}
     </div>
   </div>
@@ -86,6 +111,53 @@ const label = serviceLabels[serviceType] || 'Dev';
     box-shadow: 0 16px 48px rgba(0, 0, 0, 0.15);
   }
 
+  /* Cover image thumbnail */
+  .thumb-cover {
+    background: var(--border);
+  }
+
+  .thumb-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform var(--transition-normal);
+  }
+
+  .work-card:hover .thumb-cover img {
+    transform: scale(1.03);
+  }
+
+  .thumb-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0);
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    padding: 20px;
+    transition: background var(--transition-normal);
+  }
+
+  .work-card:hover .thumb-overlay {
+    background: rgba(0, 0, 0, 0.25);
+  }
+
+  .thumb-overlay .thumb-cta {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    opacity: 0;
+    transform: translateX(-8px);
+    transition: opacity var(--transition-normal), transform var(--transition-normal);
+  }
+
+  .work-card:hover .thumb-overlay .thumb-cta {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  /* SVG gradient thumbnail */
   .thumb-deco {
     position: absolute;
     inset: 0;
@@ -133,7 +205,7 @@ const label = serviceLabels[serviceType] || 'Dev';
     opacity: 0.25;
   }
 
-  .thumb-cta {
+  .thumb-content .thumb-cta {
     font-size: 13px;
     font-weight: 500;
     letter-spacing: 0.04em;
@@ -142,7 +214,7 @@ const label = serviceLabels[serviceType] || 'Dev';
     transition: opacity var(--transition-normal), transform var(--transition-normal);
   }
 
-  .work-card:hover .thumb-cta {
+  .work-card:hover .thumb-content .thumb-cta {
     opacity: 0.8;
     transform: translateX(0);
   }
