@@ -1,0 +1,201 @@
+---
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+
+<nav id="main-nav">
+  <a href={`${base}`} class="logo">VibeCraft<span class="reg">&reg;</span></a>
+
+  <ul class="nav-links">
+    <li><a href={`${base}#work`}>Work</a></li>
+    <li><a href={`${base}#services`}>Services</a></li>
+    <li><a href={`${base}#team`}>Team</a></li>
+    <li><a href={`${base}#process`}>Process</a></li>
+  </ul>
+
+  <a href={`${base}#contact`} class="nav-contact">Contact</a>
+
+  <button class="hamburger" id="hamburger" aria-label="메뉴 열기">
+    <span></span>
+    <span></span>
+  </button>
+</nav>
+
+<!-- Mobile Menu Overlay -->
+<div class="mobile-menu" id="mobile-menu">
+  <ul>
+    <li><a href={`${base}#work`}>Work</a></li>
+    <li><a href={`${base}#services`}>Services</a></li>
+    <li><a href={`${base}#team`}>Team</a></li>
+    <li><a href={`${base}#process`}>Process</a></li>
+    <li><a href={`${base}#contact`}>Contact</a></li>
+  </ul>
+</div>
+
+<style>
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 0 var(--container-padding);
+    height: 64px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(245, 245, 240, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s var(--ease-out), background 0.3s var(--ease-out);
+  }
+
+  nav.scrolled {
+    border-bottom-color: var(--border);
+    background: rgba(245, 245, 240, 0.95);
+  }
+
+  .logo {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .reg {
+    font-weight: 400;
+    font-size: 10px;
+    color: var(--text-tertiary);
+    vertical-align: super;
+    margin-left: 1px;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+  }
+
+  .nav-links a {
+    font-size: 13px;
+    color: var(--text-secondary);
+    transition: color var(--transition-fast);
+    letter-spacing: 0.02em;
+    font-weight: 400;
+  }
+
+  .nav-links a:hover {
+    color: var(--text);
+  }
+
+  .nav-contact {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    padding: 8px 20px;
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    transition: all var(--transition-fast);
+  }
+
+  .nav-contact:hover {
+    background: var(--text);
+    color: var(--bg);
+    border-color: var(--text);
+  }
+
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+    padding: 4px;
+  }
+
+  .hamburger span {
+    display: block;
+    width: 24px;
+    height: 1.5px;
+    background: var(--text);
+    transition: transform var(--transition-normal), opacity var(--transition-normal);
+  }
+
+  .hamburger.active span:first-child {
+    transform: translateY(3.75px) rotate(45deg);
+  }
+
+  .hamburger.active span:last-child {
+    transform: translateY(-3.75px) rotate(-45deg);
+  }
+
+  /* Mobile Menu */
+  .mobile-menu {
+    position: fixed;
+    top: 64px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 99;
+    background: rgba(245, 245, 240, 0.98);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    display: none;
+    padding: 40px var(--container-padding);
+  }
+
+  .mobile-menu.open {
+    display: block;
+  }
+
+  .mobile-menu ul {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .mobile-menu li {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .mobile-menu a {
+    display: block;
+    padding: 20px 0;
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  @media (max-width: 768px) {
+    .nav-links,
+    .nav-contact {
+      display: none;
+    }
+
+    .hamburger {
+      display: flex;
+    }
+  }
+</style>
+
+<script>
+  const nav = document.getElementById('main-nav');
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  // Scroll detection
+  window.addEventListener('scroll', () => {
+    nav?.classList.toggle('scrolled', window.scrollY > 10);
+  });
+
+  // Mobile menu toggle
+  hamburger?.addEventListener('click', () => {
+    hamburger.classList.toggle('active');
+    mobileMenu?.classList.toggle('open');
+    document.body.style.overflow = mobileMenu?.classList.contains('open') ? 'hidden' : '';
+  });
+
+  // Close menu on link click
+  mobileMenu?.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => {
+      hamburger?.classList.remove('active');
+      mobileMenu?.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  });
+</script>

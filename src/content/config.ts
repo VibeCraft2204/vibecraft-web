@@ -4,26 +4,40 @@ const projects = defineCollection({
   type: 'content',
   schema: z.object({
     title: z.string(),
-    category: z.enum(['consulting', 'development']),
-    subcategory: z.enum([
-      'digital-transform',
-      'ai-marketing',
-      'vibe-refactor',
-      'outsourcing'
-    ]),
+    summary: z.string(),
     client: z.string(),
     period: z.string(),
     status: z.enum(['completed', 'in-progress', 'planned']),
     featured: z.boolean().default(false),
     thumbnail: z.string().optional(),
-    tags: z.array(z.string()).default([]),
-    metrics: z.array(z.object({
-      label: z.string(),
-      value: z.string()
-    })).optional(),
-    techStack: z.array(z.string()).optional(),
-    summary: z.string(),
-  })
+    serviceType: z.enum([
+      'web-development',
+      'app-development',
+      'data-ai',
+      'automation',
+      'consulting',
+    ]),
+    industry: z.enum([
+      'fnb',
+      'fintech',
+      'healthcare',
+      'education',
+      'blockchain',
+      'ecommerce',
+      'saas',
+      'government',
+      'general',
+    ]),
+    techStack: z.array(z.string()).default([]),
+    metrics: z
+      .array(
+        z.object({
+          label: z.string(),
+          value: z.string(),
+        })
+      )
+      .optional(),
+  }),
 });
 
 export const collections = { projects };

@@ -1,0 +1,158 @@
+---
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const currentYear = new Date().getFullYear();
+---
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <span class="footer-logo">VibeCraft<span class="reg">&reg;</span></span>
+        <p class="footer-tagline">Digital Product Studio</p>
+      </div>
+      <div class="footer-columns">
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href={`${base}#work`}>Work</a></li>
+            <li><a href={`${base}#services`}>Services</a></li>
+            <li><a href={`${base}#team`}>Team</a></li>
+            <li><a href={`${base}#process`}>Process</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Services</h4>
+          <ul>
+            <li>웹 개발</li>
+            <li>앱 개발</li>
+            <li>데이터 / AI</li>
+            <li>자동화</li>
+            <li>컨설팅</li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Connect</h4>
+          <ul>
+            <li><a href="https://github.com/VibeCraft2204" target="_blank" rel="noopener">GitHub</a></li>
+            <li><a href="mailto:contact@vibecraft.kr">Email</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="copyright">&copy; {currentYear} VibeCraft. All rights reserved.</span>
+      <span class="footer-credit">Seoul, South Korea</span>
+    </div>
+  </div>
+</footer>
+
+<style>
+  footer {
+    background: var(--dark-bg);
+    color: var(--dark-text);
+    padding: 0 var(--container-padding);
+  }
+
+  .footer-inner {
+    max-width: var(--container-max);
+    margin: 0 auto;
+  }
+
+  .footer-top {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 64px;
+    padding: 64px 0 48px;
+    border-bottom: 1px solid var(--dark-border);
+  }
+
+  .footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .footer-logo {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .reg {
+    font-weight: 400;
+    font-size: 10px;
+    color: var(--dark-text-secondary);
+    vertical-align: super;
+    margin-left: 1px;
+  }
+
+  .footer-tagline {
+    font-size: 13px;
+    color: var(--dark-text-secondary);
+    letter-spacing: 0.04em;
+  }
+
+  .footer-columns {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+  }
+
+  .footer-col h4 {
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--dark-text-secondary);
+    margin-bottom: 16px;
+    font-weight: 400;
+  }
+
+  .footer-col ul {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .footer-col li {
+    font-size: 14px;
+    color: var(--dark-text-secondary);
+  }
+
+  .footer-col a {
+    color: var(--dark-text-secondary);
+    transition: color var(--transition-fast);
+  }
+
+  .footer-col a:hover {
+    color: var(--dark-text);
+  }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 0;
+    font-size: 12px;
+    color: var(--dark-text-secondary);
+    letter-spacing: 0.02em;
+  }
+
+  @media (max-width: 768px) {
+    .footer-top {
+      grid-template-columns: 1fr;
+      gap: 40px;
+      padding: 48px 0 32px;
+    }
+
+    .footer-columns {
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+
+    .footer-bottom {
+      flex-direction: column;
+      gap: 8px;
+      text-align: center;
+    }
+  }
+</style>
