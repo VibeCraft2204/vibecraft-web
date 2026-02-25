@@ -5,7 +5,6 @@ import PageLayout from '../../layouts/PageLayout.astro';
 import Divider from '../../components/Divider.astro';
 import SectionHeader from '../../components/SectionHeader.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
-import TableOfContents from '../../components/TableOfContents.astro';
 import MetricBar from '../../components/MetricBar.astro';
 import ImageGallery from '../../components/ImageGallery.astro';
 import ProjectNav from '../../components/ProjectNav.astro';
@@ -21,7 +20,7 @@ export async function getStaticPaths() {
 }
 
 const { project } = Astro.props;
-const { Content, headings } = await render(project);
+const { Content } = await render(project);
 
 function formatPeriod(start?: string, end?: string): string {
   if (!start) return '-';
@@ -102,8 +101,6 @@ const metaGrid = [
 
       <Divider />
 
-      <!-- Table of Contents -->
-      <TableOfContents headings={headings} />
 
       <!-- Content -->
       <div class="prose">
@@ -180,7 +177,7 @@ const metaGrid = [
   }
 
   .breadcrumb a:hover {
-    color: var(--text);
+    color: var(--accent);
   }
 
   .sep {
@@ -189,6 +186,7 @@ const metaGrid = [
   }
 
   h1 {
+    font-family: var(--font-display);
     font-size: clamp(32px, 4vw, 48px);
     font-weight: 600;
     letter-spacing: -0.03em;
@@ -206,21 +204,18 @@ const metaGrid = [
 
   /* Meta Grid */
   .meta-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0;
+    display: flex;
+    gap: 48px;
     margin-top: 48px;
     margin-bottom: 48px;
-    border: 1px solid var(--border);
+    padding-top: 24px;
+    border-top: 1px solid var(--accent);
   }
 
   .meta-item {
-    padding: 20px 24px;
-    border-right: 1px solid var(--border);
-  }
-
-  .meta-item:last-child {
-    border-right: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
   }
 
   .meta-label {
@@ -229,7 +224,6 @@ const metaGrid = [
     letter-spacing: 0.06em;
     text-transform: uppercase;
     color: var(--text-tertiary);
-    margin-bottom: 6px;
   }
 
   .meta-value {
@@ -275,7 +269,7 @@ const metaGrid = [
     letter-spacing: 0.04em;
     padding: 5px 12px;
     border: 1px solid var(--border);
-    border-radius: 2px;
+    border-radius: 100px;
     color: var(--text-secondary);
   }
 
@@ -294,16 +288,8 @@ const metaGrid = [
     }
 
     .meta-grid {
-      grid-template-columns: 1fr 1fr;
-    }
-
-    .meta-item:nth-child(2) {
-      border-right: none;
-    }
-
-    .meta-item:nth-child(1),
-    .meta-item:nth-child(2) {
-      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+      gap: 24px 40px;
     }
 
     .related-grid {
