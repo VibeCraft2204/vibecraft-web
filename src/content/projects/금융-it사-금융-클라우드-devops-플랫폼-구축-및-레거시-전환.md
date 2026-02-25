@@ -6,7 +6,7 @@ field: [DevOps]
 tech: [GitLab, Kubernetes, Prometheus, Docker]
 team: []
 period_start: 2025-01-01
-cover: "covers/금융-it사-금융-클라우드-devops-플랫폼-구축-및-레거시-전환.png"
+cover: "../../assets/covers/금융-it사-금융-클라우드-devops-플랫폼-구축-및-레거시-전환.png"
 notion_id: "31055bb2-024a-8152-8d70-ee808b39cc08"
 featured: false
 ---

@@ -7,7 +7,7 @@ tech: [GitLab, Docker, Prometheus]
 team: []
 period_start: 2025-07-01
 period_end: 2025-11-30
-cover: "covers/핀테크사-분산-형상관리-통합-및-cicd-표준화.png"
+cover: "../../assets/covers/핀테크사-분산-형상관리-통합-및-cicd-표준화.png"
 notion_id: "31055bb2-024a-8178-bda5-e57a38e9d74d"
 featured: true
 ---

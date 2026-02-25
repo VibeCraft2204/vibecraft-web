@@ -7,7 +7,7 @@ tech: [Flutter, FastAPI, Docker, Bash Shell, Sqlite, Github Action]
 team: []
 period_start: 2023-02-01
 period_end: 2023-06-16
-cover: "covers/iot-엣지-모니터링-장비-개발.png"
+cover: "../../assets/covers/iot-엣지-모니터링-장비-개발.png"
 notion_id: "2f855bb2-024a-8192-878d-f896d26a80bf"
 featured: false
 ---

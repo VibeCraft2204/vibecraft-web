@@ -3,7 +3,7 @@ title: "CPTV (Crime Protection CCTV)"
 summary: "무인점포 사각지대 보완을 위한 음성 인식 + 행동 탐지 기반 SBC 스마트 CCTV"
 company: "대학 연구실"
 field: [IoT, AI]
-tech: []
+tech: [Python, Raspberry Pi, TensorFlow]
 team: []
 period_start: 2021-01-01
 period_end: 2021-09-21

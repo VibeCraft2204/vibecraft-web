@@ -7,7 +7,7 @@ tech: [Python, FastAPI, Postgresql, Git, Github Action, Docker, Linux]
 team: []
 period_start: 2024-01-15
 period_end: 2024-05-31
-cover: "covers/공공-환경기관-ai-예측-모델-개발.png"
+cover: "../../assets/covers/공공-환경기관-ai-예측-모델-개발.png"
 notion_id: "2f855bb2-024a-81aa-bf54-dafae9b43c6b"
 featured: false
 ---

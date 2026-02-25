@@ -7,7 +7,7 @@ tech: [Python, JS, React]
 team: []
 period_start: 2025-01-01
 period_end: 2025-12-31
-cover: "covers/vibecraft-ai-기반-원샷-대시보드-생성-에이전트.png"
+cover: "../../assets/covers/vibecraft-ai-기반-원샷-대시보드-생성-에이전트.png"
 notion_id: "31055bb2-024a-81a4-912f-d65596e27983"
 featured: true
 ---

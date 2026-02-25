@@ -2,7 +2,7 @@ import { defineCollection, z } from 'astro:content';
 
 const projects = defineCollection({
   type: 'content',
-  schema: z.object({
+  schema: ({ image }) => z.object({
     title: z.string(),
     summary: z.string(),
     company: z.string().default(''),
@@ -21,7 +21,7 @@ const projects = defineCollection({
         val instanceof Date ? val.toISOString().split('T')[0] : val
       )
       .optional(),
-    cover: z.string().optional(),
+    cover: image().optional(),
     notion_id: z.string().optional(),
     featured: z.boolean().default(false),
   }),

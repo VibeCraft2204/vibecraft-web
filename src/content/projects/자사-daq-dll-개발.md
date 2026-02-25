@@ -2,12 +2,12 @@
 title: "자사 DAQ DLL 개발"
 summary: "DAQ 장비 제어 SDK 개발 (C++ DLL, Python 바인딩, API 문서)"
 company: "계측 전문기업"
-field: []
-tech: []
+field: [B/E]
+tech: [C++, Python]
 team: []
 period_start: 2021-02-02
 period_end: 2021-03-25
-cover: "covers/자사-daq-dll-개발.png"
+cover: "../../assets/covers/자사-daq-dll-개발.png"
 notion_id: "2f855bb2-024a-8103-b0d0-d7139b4bd351"
 featured: false
 ---

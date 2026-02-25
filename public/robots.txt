@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://vibecraft2204.github.io/vibecraft-web/sitemap-index.xml

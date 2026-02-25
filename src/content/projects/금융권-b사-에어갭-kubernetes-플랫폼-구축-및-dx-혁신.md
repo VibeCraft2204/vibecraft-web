@@ -7,7 +7,7 @@ tech: [Kubernetes, GitLab, Prometheus, Grafana]
 team: []
 period_start: 2024-10-01
 period_end: 2025-01-31
-cover: "covers/금융권-b사-에어갭-kubernetes-플랫폼-구축-및-dx-혁신.png"
+cover: "../../assets/covers/금융권-b사-에어갭-kubernetes-플랫폼-구축-및-dx-혁신.png"
 notion_id: "31055bb2-024a-811b-9f64-ef81f20291b7"
 featured: false
 ---

@@ -2,8 +2,8 @@
 title: "Navigation Drone - TSP 알고리즘 기반 최단 경로 배송 드론"
 summary: "HPC 서버 활용 TSP 알고리즘 기반 최단 방문 경로 자율 배송 드론"
 company: "대학 연구실"
-field: []
-tech: []
+field: [AI, IoT]
+tech: [Python, C/C++, Raspberry Pi]
 team: []
 period_start: 2020-01-02
 period_end: 2020-10-25

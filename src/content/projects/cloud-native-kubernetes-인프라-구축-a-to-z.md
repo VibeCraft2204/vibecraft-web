@@ -6,7 +6,7 @@ field: [DevOps]
 tech: [Kubernetes, Prometheus, Grafana, Docker, Linux]
 team: []
 period_start: 2024-09-01
-cover: "covers/cloud-native-kubernetes-인프라-구축-a-to-z.png"
+cover: "../../assets/covers/cloud-native-kubernetes-인프라-구축-a-to-z.png"
 notion_id: "31055bb2-024a-8188-9daf-f56f1ec5b95f"
 featured: false
 ---

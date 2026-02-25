@@ -6,7 +6,7 @@ field: [B/E, F/E, DB, Data]
 tech: [Python, JS, Django, React, Sqlite, Git, Github Action, AWS]
 team: []
 period_start: 2025-12-22
-cover: "covers/multiview-annotation-tool.png"
+cover: "../../assets/covers/multiview-annotation-tool.png"
 notion_id: "2f855bb2-024a-8105-8194-feb12b3e85f0"
 featured: true
 ---

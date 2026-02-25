@@ -2,8 +2,8 @@
 title: "Drone Indoor Positioning"
 summary: "GPS/비콘 없는 CV 기반 저비용 실내 드론 자율주행 시스템"
 company: "대학 연구실"
-field: []
-tech: []
+field: [AI, IoT]
+tech: [Python, C/C++, Raspberry Pi]
 team: []
 period_start: 2020-03-02
 period_end: 2020-06-25

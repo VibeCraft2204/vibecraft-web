@@ -7,7 +7,7 @@ tech: [Kubernetes, GitLab, Docker]
 team: []
 period_start: 2024-03-01
 period_end: 2024-06-30
-cover: "covers/금융권-c사-nks-기반-컨테이너화-및-gitops-체계-구축.png"
+cover: "../../assets/covers/금융권-c사-nks-기반-컨테이너화-및-gitops-체계-구축.png"
 notion_id: "31055bb2-024a-81d1-acdd-e68169fef1c9"
 featured: false
 ---

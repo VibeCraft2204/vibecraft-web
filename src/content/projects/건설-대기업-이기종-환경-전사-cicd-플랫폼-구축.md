@@ -7,7 +7,7 @@ tech: [GitLab, Java, C#]
 team: []
 period_start: 2024-07-01
 period_end: 2024-10-31
-cover: "covers/건설-대기업-이기종-환경-전사-cicd-플랫폼-구축.png"
+cover: "../../assets/covers/건설-대기업-이기종-환경-전사-cicd-플랫폼-구축.png"
 notion_id: "31055bb2-024a-810a-b56a-ee42e3ba5bbf"
 featured: false
 ---

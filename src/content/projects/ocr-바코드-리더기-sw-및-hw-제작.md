@@ -3,11 +3,11 @@ title: "OCR 바코드 리더기 SW 및 HW 제작"
 summary: "오염 라벨 대응 경량화 OCR 모델 및 IoT 장비 프로토타입 개발"
 company: "계측 전문기업"
 field: [IoT, AI]
-tech: []
+tech: [Python, TensorFlow]
 team: []
 period_start: 2021-04-01
 period_end: 2021-08-26
-cover: "covers/ocr-바코드-리더기-sw-및-hw-제작.png"
+cover: "../../assets/covers/ocr-바코드-리더기-sw-및-hw-제작.png"
 notion_id: "2f855bb2-024a-819d-a4f1-cc13d978c719"
 featured: false
 ---

@@ -2,12 +2,12 @@
 title: "자사 DAQ 윈도우 어플리케이션"
 summary: "LAN 기반 실시간 데이터 송수신 및 Spectrogram 모니터링 윈도우 어플리케이션"
 company: "계측 전문기업"
-field: []
-tech: [iOS]
+field: [APP]
+tech: [C++, MFC]
 team: []
 period_start: 2021-01-04
 period_end: 2021-02-26
-cover: "covers/자사-daq-윈도우-어플리케이션.png"
+cover: "../../assets/covers/자사-daq-윈도우-어플리케이션.png"
 notion_id: "2f855bb2-024a-8163-9dca-f0bec565297d"
 featured: false
 ---

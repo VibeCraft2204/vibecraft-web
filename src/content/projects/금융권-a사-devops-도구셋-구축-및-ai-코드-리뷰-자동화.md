@@ -7,7 +7,7 @@ tech: [GitLab, Prometheus, Grafana, Keycloak, N8N]
 team: []
 period_start: 2025-08-01
 period_end: 2026-02-28
-cover: "covers/금융권-a사-devops-도구셋-구축-및-ai-코드-리뷰-자동화.png"
+cover: "../../assets/covers/금융권-a사-devops-도구셋-구축-및-ai-코드-리뷰-자동화.png"
 notion_id: "31055bb2-024a-812a-9d89-c00d9e5ad587"
 featured: true
 ---

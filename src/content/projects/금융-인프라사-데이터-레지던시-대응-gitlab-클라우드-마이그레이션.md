@@ -7,7 +7,7 @@ tech: [GitLab, AWS]
 team: []
 period_start: 2023-07-01
 period_end: 2023-07-31
-cover: "covers/금융-인프라사-데이터-레지던시-대응-gitlab-클라우드-마이그레이션.png"
+cover: "../../assets/covers/금융-인프라사-데이터-레지던시-대응-gitlab-클라우드-마이그레이션.png"
 notion_id: "31055bb2-024a-81cd-8f66-d55f907b64b9"
 featured: false
 ---
