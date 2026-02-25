@@ -5,6 +5,10 @@ import PageLayout from '../../layouts/PageLayout.astro';
 import Divider from '../../components/Divider.astro';
 import SectionHeader from '../../components/SectionHeader.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
+import TableOfContents from '../../components/TableOfContents.astro';
+import MetricBar from '../../components/MetricBar.astro';
+import ImageGallery from '../../components/ImageGallery.astro';
+import ProjectNav from '../../components/ProjectNav.astro';
 
 const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 
@@ -17,7 +21,7 @@ export async function getStaticPaths() {
 }
 
 const { project } = Astro.props;
-const { Content } = await render(project);
+const { Content, headings } = await render(project);
 
 function formatPeriod(start?: string, end?: string): string {
   if (!start) return '-';
@@ -26,8 +30,19 @@ function formatPeriod(start?: string, end?: string): string {
   return `${fmt(start)} — 진행중`;
 }
 
+// All projects sorted by period_start (descending)
+const allProjects = (await getCollection('projects')).sort((a, b) => {
+  const aDate = a.data.period_start || '0000';
+  const bDate = b.data.period_start || '0000';
+  return aDate > bDate ? -1 : 1;
+});
+
+// Prev/Next navigation
+const currentIndex = allProjects.findIndex((p) => p.slug === project.slug);
+const prevProject = currentIndex < allProjects.length - 1 ? allProjects[currentIndex + 1] : undefined;
+const nextProject = currentIndex > 0 ? allProjects[currentIndex - 1] : undefined;
+
 // Related projects: same field overlap, exclude current, max 3
-const allProjects = await getCollection('projects');
 const currentFields = new Set(project.data.field);
 const relatedProjects = allProjects
   .filter(
@@ -82,12 +97,21 @@ const metaGrid = [
         </div>
       )}
 
+      <!-- Metrics -->
+      <MetricBar metrics={project.data.metrics} />
+
       <Divider />
+
+      <!-- Table of Contents -->
+      <TableOfContents headings={headings} />
 
       <!-- Content -->
       <div class="prose">
         <Content />
       </div>
+
+      <!-- Gallery -->
+      <ImageGallery images={project.data.gallery} alt={project.data.title} />
 
       <Divider />
 
@@ -104,6 +128,12 @@ const metaGrid = [
           </div>
         )
       }
+
+      <!-- Project Navigation -->
+      <ProjectNav
+        prev={prevProject ? { slug: prevProject.slug, title: prevProject.data.title } : undefined}
+        next={nextProject ? { slug: nextProject.slug, title: nextProject.data.title } : undefined}
+      />
     </div>
   </article>
 

@@ -1,0 +1,302 @@
+---
+import { getCollection } from 'astro:content';
+import PageLayout from '../../layouts/PageLayout.astro';
+import Divider from '../../components/Divider.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import { services } from '../../data/services';
+
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+
+export function getStaticPaths() {
+  return services.map((s) => ({
+    params: { slug: s.slug },
+    props: { service: s },
+  }));
+}
+
+const { service } = Astro.props;
+
+// 관련 프로젝트: relatedFields와 프로젝트 field 겹치는 것
+const allProjects = await getCollection('projects');
+const relatedProjects = service.relatedFields.length > 0
+  ? allProjects
+      .filter((p) =>
+        p.data.field.some((f: string) => service.relatedFields.includes(f))
+      )
+      .sort((a, b) => {
+        const aDate = a.data.period_start || '0000';
+        const bDate = b.data.period_start || '0000';
+        return aDate > bDate ? -1 : 1;
+      })
+      .slice(0, 8)
+  : [];
+---
+
+<PageLayout
+  title={`${service.title} — VibeCraft`}
+  description={service.description}
+>
+  <article class="service-detail">
+    <div class="container">
+      <!-- Header -->
+      <nav class="breadcrumb">
+        <a href={`${base}`}>Home</a>
+        <span class="sep">/</span>
+        <span>{service.title}</span>
+      </nav>
+
+      <div class="service-header">
+        <span class="service-number">{service.number}</span>
+        <h1>{service.title}</h1>
+        <p class="service-desc">{service.detail}</p>
+      </div>
+
+      <Divider />
+
+      <!-- Tech Stack -->
+      {service.techStack.length > 0 && (
+        <div class="tech-section">
+          <h3 class="section-label">기술 스택</h3>
+          <div class="tech-list">
+            {service.techStack.map((t) => (
+              <span class="tech-tag">{t}</span>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  </article>
+
+  <!-- Related Projects -->
+  {relatedProjects.length > 0 ? (
+    <>
+      <Divider />
+      <section class="section related">
+        <div class="container">
+          <div class="related-header">
+            <h3 class="section-label">관련 프로젝트</h3>
+            <span class="related-count">{relatedProjects.length}개 프로젝트</span>
+          </div>
+          <div class="related-grid">
+            {relatedProjects.map((rp, i) => (
+              <ProjectCard
+                title={rp.data.title}
+                summary={rp.data.summary}
+                tech={rp.data.tech}
+                slug={rp.slug}
+                field={rp.data.field}
+                cover={rp.data.cover}
+                index={i + 1}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+    </>
+  ) : (
+    <>
+      <Divider />
+      <section class="section related-empty">
+        <div class="container">
+          <p class="empty-msg">관련 프로젝트를 준비 중입니다.</p>
+        </div>
+      </section>
+    </>
+  )}
+
+  <!-- CTA -->
+  <section class="section cta-section">
+    <div class="container">
+      <h2 class="cta-heading">
+        {service.title} 프로젝트,<br/>
+        함께 시작할까요?
+      </h2>
+      <p class="cta-desc">프로젝트 문의부터 기술 상담까지, 편하게 연락주세요.</p>
+      <a
+        href="https://docs.google.com/forms/d/e/1FAIpQLScPYEgY-bhxM31JWZsoHIaNdFGE-Dy3HJjn41500A0O7IeeOQ/viewform"
+        target="_blank"
+        rel="noopener"
+        class="cta-btn"
+      >
+        <span>프로젝트 문의하기</span>
+        <span class="arrow">&rarr;</span>
+      </a>
+    </div>
+  </section>
+</PageLayout>
+
+<style>
+  .service-detail {
+    padding-top: 140px;
+  }
+
+  .breadcrumb {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-bottom: 32px;
+  }
+
+  .breadcrumb a {
+    transition: color var(--transition-fast);
+  }
+
+  .breadcrumb a:hover {
+    color: var(--text);
+  }
+
+  .sep {
+    margin: 0 8px;
+    color: var(--border);
+  }
+
+  .service-header {
+    max-width: 720px;
+  }
+
+  .service-number {
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    color: var(--text-tertiary);
+    display: block;
+    margin-bottom: 16px;
+  }
+
+  h1 {
+    font-size: clamp(36px, 5vw, 56px);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: 24px;
+  }
+
+  .service-desc {
+    font-size: 17px;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    max-width: 600px;
+  }
+
+  /* Tech */
+  .tech-section {
+    margin: 40px 0 48px;
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: 16px;
+  }
+
+  .tech-list {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .tech-tag {
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    padding: 6px 14px;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    color: var(--text-secondary);
+  }
+
+  /* Related */
+  .related-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 32px;
+  }
+
+  .related-count {
+    font-size: 13px;
+    color: var(--text-tertiary);
+  }
+
+  .related-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px 28px;
+  }
+
+  .related-empty {
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
+
+  .empty-msg {
+    font-size: 15px;
+    color: var(--text-tertiary);
+    text-align: center;
+  }
+
+  /* CTA */
+  .cta-section {
+    text-align: center;
+    padding-top: clamp(80px, 10vw, 120px);
+    padding-bottom: clamp(80px, 10vw, 120px);
+  }
+
+  .cta-heading {
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.2;
+  }
+
+  .cta-desc {
+    margin-top: 16px;
+    color: var(--text-secondary);
+    font-size: 16px;
+  }
+
+  .cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 32px;
+    padding: 14px 36px;
+    background: var(--text);
+    color: var(--bg);
+    font-size: 15px;
+    font-weight: 500;
+    border-radius: 2px;
+    transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+  }
+
+  .cta-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.15);
+  }
+
+  .cta-btn .arrow {
+    display: inline-block;
+    transition: transform var(--transition-fast);
+  }
+
+  .cta-btn:hover .arrow {
+    transform: translateX(4px);
+  }
+
+  @media (max-width: 768px) {
+    .service-detail {
+      padding-top: 120px;
+    }
+
+    .related-grid {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+  }
+
+  @media (min-width: 769px) and (max-width: 1024px) {
+    .related-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

@@ -22,6 +22,12 @@ const projects = defineCollection({
       )
       .optional(),
     cover: image().optional(),
+    gallery: z.array(z.string()).default([]),
+    metrics: z.array(z.object({
+      label: z.string(),
+      value: z.string(),
+      description: z.string().optional(),
+    })).default([]),
     notion_id: z.string().optional(),
     featured: z.boolean().default(false),
   }),

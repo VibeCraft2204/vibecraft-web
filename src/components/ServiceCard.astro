@@ -3,19 +3,21 @@ interface Props {
   number: string;
   title: string;
   description: string;
+  href?: string;
 }
 
-const { number, title, description } = Astro.props;
+const { number, title, description, href } = Astro.props;
+const Tag = href ? 'a' : 'div';
 ---
 
-<div class="service-card">
+<Tag class:list={['service-card', { linked: !!href }]} href={href}>
   <div class="card-top">
     <span class="label">{number}</span>
     <span class="arrow">&rarr;</span>
   </div>
   <h3>{title}</h3>
   <p>{description}</p>
-</div>
+</Tag>
 
 <style>
   .service-card {
@@ -26,6 +28,12 @@ const { number, title, description } = Astro.props;
     display: flex;
     flex-direction: column;
     min-height: 220px;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .service-card.linked {
+    cursor: pointer;
   }
 
   .service-card:hover {
