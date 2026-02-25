@@ -17,7 +17,7 @@
   --bg-alt: #eaeae5;
   --text: #1a1a1a;
   --text-secondary: #5a5a5a;
-  --text-tertiary: #8a8a8a;
+  --text-tertiary: #757575;
   --border: #d0d0c8;
   --white: #ffffff;
   --card-bg: #ebebeb;
@@ -85,6 +85,16 @@ button {
   background: none;
   cursor: pointer;
   color: inherit;
+}
+
+/* --- Focus --- */
+:focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: 2px;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
 }
 
 /* --- Selection --- */

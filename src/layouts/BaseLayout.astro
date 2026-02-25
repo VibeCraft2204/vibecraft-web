@@ -61,19 +61,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
     <!-- Scroll Reveal Observer -->
     <script>
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('visible');
-              observer.unobserve(entry.target);
-            }
-          });
-        },
-        { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
-      );
-
-      document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+      import { initScrollReveal } from '../scripts/scroll-reveal';
+      initScrollReveal();
     </script>
   </body>
 </html>

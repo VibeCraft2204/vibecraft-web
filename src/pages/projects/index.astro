@@ -51,13 +51,18 @@ const sortedProjects = allProjects.sort((a, b) => {
   <!-- Filters -->
   <section class="filter-section">
     <div class="container">
+      <div class="search-group">
+        <input type="search" id="project-search" placeholder="프로젝트 검색..."
+               aria-label="프로젝트 검색" autocomplete="off" />
+      </div>
+
       <div class="filter-group">
         <span class="filter-label">분야</span>
-        <div class="filter-buttons" data-axis="field">
-          <button class="filter-btn active" data-value="all">All</button>
+        <div class="filter-buttons" data-axis="field" role="group" aria-label="분야 필터">
+          <button class="filter-btn active" data-value="all" aria-pressed="true">All</button>
           {
             allFields.map((f) => (
-              <button class="filter-btn" data-value={f}>
+              <button class="filter-btn" data-value={f} aria-pressed="false">
                 {fieldLabels[f] || f}
               </button>
             ))
@@ -67,11 +72,11 @@ const sortedProjects = allProjects.sort((a, b) => {
 
       <div class="filter-group">
         <span class="filter-label">회사</span>
-        <div class="filter-buttons" data-axis="company">
-          <button class="filter-btn active" data-value="all">All</button>
+        <div class="filter-buttons" data-axis="company" role="group" aria-label="회사 필터">
+          <button class="filter-btn active" data-value="all" aria-pressed="true">All</button>
           {
             allCompanies.map((c) => (
-              <button class="filter-btn" data-value={c}>
+              <button class="filter-btn" data-value={c} aria-pressed="false">
                 {c}
               </button>
             ))
@@ -81,11 +86,11 @@ const sortedProjects = allProjects.sort((a, b) => {
 
       <div class="filter-group">
         <span class="filter-label">기술</span>
-        <div class="filter-buttons filter-buttons-scroll" data-axis="tech">
-          <button class="filter-btn active" data-value="all">All</button>
+        <div class="filter-buttons filter-buttons-scroll" data-axis="tech" role="group" aria-label="기술 필터">
+          <button class="filter-btn active" data-value="all" aria-pressed="true">All</button>
           {
             allTechStacks.map((tech) => (
-              <button class="filter-btn" data-value={tech}>
+              <button class="filter-btn" data-value={tech} aria-pressed="false">
                 {tech}
               </button>
             ))
@@ -95,7 +100,7 @@ const sortedProjects = allProjects.sort((a, b) => {
 
       <div class="filter-actions">
         <button class="reset-btn" id="reset-filters">필터 초기화</button>
-        <span class="result-count" id="result-count"
+        <span class="result-count" id="result-count" aria-live="polite" role="status"
           >{allProjects.length}개 프로젝트</span
         >
       </div>
@@ -115,6 +120,8 @@ const sortedProjects = allProjects.sort((a, b) => {
               data-field={project.data.field.join(',')}
               data-company={project.data.company}
               data-tech={project.data.tech.join(',')}
+              data-title={project.data.title}
+              data-summary={project.data.summary}
             >
               <ProjectCard
                 title={project.data.title}
@@ -165,6 +172,30 @@ const sortedProjects = allProjects.sort((a, b) => {
   /* Filter Section */
   .filter-section {
     padding: 32px 0;
+  }
+
+  .search-group {
+    margin-bottom: 24px;
+  }
+
+  .search-group input {
+    width: 100%;
+    padding: 10px 16px;
+    font-size: 14px;
+    font-family: var(--font);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    background: transparent;
+    color: var(--text);
+    transition: border-color var(--transition-fast);
+  }
+
+  .search-group input::placeholder {
+    color: var(--text-tertiary);
+  }
+
+  .search-group input:focus {
+    border-color: var(--text);
   }
 
   .filter-group {
@@ -351,8 +382,10 @@ const sortedProjects = allProjects.sort((a, b) => {
   const resultCount = document.getElementById('result-count');
   const resetBtn = document.getElementById('reset-filters');
   const zeroReset = document.getElementById('zero-reset');
+  const searchInput = document.getElementById('project-search') as HTMLInputElement | null;
 
   function getMatchingItems() {
+    const query = (searchInput?.value || '').toLowerCase().trim();
     return items.filter((item) => {
       const el = item as HTMLElement;
       const matchField =
@@ -364,7 +397,11 @@ const sortedProjects = allProjects.sort((a, b) => {
       const matchTech =
         activeFilters.tech === 'all' ||
         (el.dataset.tech || '').split(',').includes(activeFilters.tech);
-      return matchField && matchCompany && matchTech;
+      const matchSearch = !query ||
+        (el.dataset.title || '').toLowerCase().includes(query) ||
+        (el.dataset.summary || '').toLowerCase().includes(query) ||
+        (el.dataset.tech || '').toLowerCase().includes(query);
+      return matchField && matchCompany && matchTech && matchSearch;
     });
   }
 
@@ -404,6 +441,8 @@ const sortedProjects = allProjects.sort((a, b) => {
     if (activeFilters.company !== 'all')
       params.set('company', activeFilters.company);
     if (activeFilters.tech !== 'all') params.set('tech', activeFilters.tech);
+    const query = (searchInput?.value || '').trim();
+    if (query) params.set('q', query);
     const search = params.toString();
     history.replaceState(
       null,
@@ -415,9 +454,12 @@ const sortedProjects = allProjects.sort((a, b) => {
   function resetFilters() {
     activeFilters = { field: 'all', company: 'all', tech: 'all' };
     visibleCount = ITEMS_PER_PAGE;
+    if (searchInput) searchInput.value = '';
     document.querySelectorAll('.filter-btn').forEach((btn) => {
       const el = btn as HTMLElement;
-      el.classList.toggle('active', el.dataset.value === 'all');
+      const isAll = el.dataset.value === 'all';
+      el.classList.toggle('active', isAll);
+      el.setAttribute('aria-pressed', String(isAll));
     });
     applyFilters();
   }
@@ -434,8 +476,12 @@ const sortedProjects = allProjects.sort((a, b) => {
         // Update active state within this group
         group
           .querySelectorAll('.filter-btn')
-          .forEach((b) => b.classList.remove('active'));
+          .forEach((b) => {
+            b.classList.remove('active');
+            b.setAttribute('aria-pressed', 'false');
+          });
         btn.classList.add('active');
+        btn.setAttribute('aria-pressed', 'true');
 
         applyFilters();
       });
@@ -446,6 +492,16 @@ const sortedProjects = allProjects.sort((a, b) => {
   showMoreBtn?.addEventListener('click', () => {
     visibleCount += ITEMS_PER_PAGE;
     applyFilters();
+  });
+
+  // Search with debounce
+  let debounceTimer: ReturnType<typeof setTimeout>;
+  searchInput?.addEventListener('input', () => {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => {
+      visibleCount = ITEMS_PER_PAGE;
+      applyFilters();
+    }, 300);
   });
 
   // Reset
@@ -463,6 +519,9 @@ const sortedProjects = allProjects.sort((a, b) => {
   if (urlParams.has('tech')) {
     activeFilters.tech = urlParams.get('tech')!;
   }
+  if (urlParams.has('q') && searchInput) {
+    searchInput.value = urlParams.get('q')!;
+  }
 
   // Sync button states from URL
   Object.entries(activeFilters).forEach(([axis, value]) => {
@@ -470,12 +529,11 @@ const sortedProjects = allProjects.sort((a, b) => {
     if (group) {
       group
         .querySelectorAll('.filter-btn')
-        .forEach((btn) =>
-          btn.classList.toggle(
-            'active',
-            (btn as HTMLElement).dataset.value === value
-          )
-        );
+        .forEach((btn) => {
+          const isActive = (btn as HTMLElement).dataset.value === value;
+          btn.classList.toggle('active', isActive);
+          btn.setAttribute('aria-pressed', String(isActive));
+        });
     }
   });
 
