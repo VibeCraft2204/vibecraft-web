@@ -23,7 +23,8 @@ const Tag = href ? 'a' : 'div';
   .service-card {
     background: var(--dark-bg);
     padding: 40px 32px;
-    transition: background var(--transition-normal);
+    border: 1px solid transparent;
+    transition: background var(--transition-normal), border-color var(--transition-normal);
     cursor: default;
     display: flex;
     flex-direction: column;
@@ -38,6 +39,7 @@ const Tag = href ? 'a' : 'div';
 
   .service-card:hover {
     background: var(--dark-bg-alt);
+    border-color: var(--accent-light);
   }
 
   .card-top {

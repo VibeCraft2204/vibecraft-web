@@ -57,6 +57,7 @@ const process = [
 <PageLayout>
   <!-- Hero -->
   <section class="hero">
+    <div class="hero-glow"></div>
     <div class="container hero-container">
       <div class="hero-content">
         <div class="reveal">
@@ -248,6 +249,27 @@ const process = [
   </section>
 </PageLayout>
 
+<script>
+  const hero = document.querySelector('.hero') as HTMLElement | null;
+  const glow = document.querySelector('.hero-glow') as HTMLElement | null;
+
+  hero?.addEventListener('mousemove', (e) => {
+    const rect = hero.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    if (glow) {
+      glow.style.opacity = '1';
+      glow.style.background = `radial-gradient(600px at ${x}px ${y}px, rgba(43, 122, 111, 0.07), transparent 80%)`;
+    }
+  });
+
+  hero?.addEventListener('mouseleave', () => {
+    if (glow) {
+      glow.style.opacity = '0';
+    }
+  });
+</script>
+
 <style>
   /* ===== Hero ===== */
   .hero {
@@ -279,6 +301,7 @@ const process = [
     color: var(--text-secondary);
     margin-bottom: 24px;
     font-weight: 400;
+    font-family: var(--font-display);
   }
 
   .hero h1 {
@@ -287,10 +310,11 @@ const process = [
     letter-spacing: -0.035em;
     line-height: 1.05;
     color: var(--text);
+    font-family: var(--font-display);
   }
 
   .dot {
-    color: var(--text-secondary);
+    color: var(--accent);
   }
 
   .hero-desc {
@@ -313,18 +337,19 @@ const process = [
     display: inline-flex;
     align-items: center;
     padding: 14px 32px;
-    background: var(--text);
-    color: var(--bg);
+    background: var(--accent);
+    color: #fff;
     font-size: 14px;
     font-weight: 500;
     letter-spacing: 0.02em;
-    border-radius: 2px;
-    transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+    border-radius: 100px;
+    transition: background var(--transition-normal), transform var(--transition-normal), box-shadow var(--transition-normal);
   }
 
   .hero-btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    background: var(--accent-hover);
+    transform: scale(1.02);
+    box-shadow: 0 4px 20px rgba(43, 122, 111, 0.25);
   }
 
   .hero-btn-secondary {
@@ -334,11 +359,27 @@ const process = [
     display: inline-flex;
     align-items: center;
     gap: 8px;
+    position: relative;
     transition: color var(--transition-fast);
+  }
+
+  .hero-btn-secondary::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--text);
+    transition: width var(--transition-normal);
   }
 
   .hero-btn-secondary:hover {
     color: var(--text);
+  }
+
+  .hero-btn-secondary:hover::after {
+    width: 100%;
   }
 
   .hero-btn-secondary .arrow {
@@ -355,7 +396,7 @@ const process = [
     gap: 48px;
     margin-top: auto;
     padding-top: 40px;
-    border-top: 1px solid var(--border);
+    border-top: 1px solid var(--accent);
   }
 
   .hero-stat {
@@ -368,6 +409,7 @@ const process = [
     font-size: 28px;
     font-weight: 700;
     letter-spacing: -0.03em;
+    font-family: var(--font-display);
   }
 
   .hero-stat-label {
@@ -449,6 +491,7 @@ const process = [
     font-weight: 700;
     letter-spacing: -0.03em;
     line-height: 1.1;
+    font-family: var(--font-display);
   }
 
   .dark-title {
@@ -616,17 +659,18 @@ const process = [
     gap: 12px;
     margin-top: 40px;
     padding: 16px 40px;
-    background: var(--text);
-    color: var(--bg);
+    background: var(--accent);
+    color: #fff;
     font-size: 15px;
     font-weight: 500;
-    border-radius: 2px;
-    transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+    border-radius: 100px;
+    transition: background var(--transition-normal), transform var(--transition-normal), box-shadow var(--transition-normal);
   }
 
   .cta-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.15);
+    background: var(--accent-hover);
+    transform: scale(1.02);
+    box-shadow: 0 4px 20px rgba(43, 122, 111, 0.25);
   }
 
   .cta-btn .arrow {
@@ -636,6 +680,69 @@ const process = [
 
   .cta-btn:hover .arrow {
     transform: translateX(4px);
+  }
+
+  /* ===== Hero Glow ===== */
+  .hero-glow {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  .hero-container {
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-scroll-hint {
+    z-index: 1;
+  }
+
+  /* ===== Accent Markers ===== */
+  .hero-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+    margin-right: 12px;
+    vertical-align: middle;
+  }
+
+  .section-label::before {
+    content: '\2014\0020';
+    color: var(--accent);
+  }
+
+  .dark-label::before {
+    color: var(--accent-light);
+  }
+
+  .cta-eyebrow::before {
+    content: '\2014\0020';
+    color: var(--accent);
+  }
+
+  /* ===== Dark Section Transition ===== */
+  #services,
+  #process {
+    position: relative;
+  }
+
+  #services::before,
+  #process::before {
+    content: '';
+    position: absolute;
+    top: -24px;
+    left: 0;
+    right: 0;
+    height: 48px;
+    background: linear-gradient(var(--bg), var(--dark-bg));
+    pointer-events: none;
+    z-index: 1;
   }
 
   /* ===== Responsive ===== */

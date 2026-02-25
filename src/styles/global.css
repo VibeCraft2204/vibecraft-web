@@ -30,9 +30,12 @@
   --dark-border: #333;
 
   /* Accent */
-  --accent: #4a4a4a;
+  --accent: #2B7A6F;
+  --accent-hover: #236B61;
+  --accent-light: #5CB8A8;
 
   /* Typography */
+  --font-display: 'Cabinet Grotesk', 'Pretendard Variable', sans-serif;
   --font: 'Pretendard Variable', 'Pretendard', -apple-system,
     BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', sans-serif;
 

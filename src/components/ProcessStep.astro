@@ -18,7 +18,8 @@ const { number, title, description } = Astro.props;
   .process-step {
     background: var(--dark-bg);
     padding: 40px 32px;
-    transition: background var(--transition-normal);
+    border: 1px solid transparent;
+    transition: background var(--transition-normal), border-color var(--transition-normal);
     display: flex;
     flex-direction: column;
     min-height: 200px;
@@ -26,6 +27,7 @@ const { number, title, description } = Astro.props;
 
   .process-step:hover {
     background: var(--dark-bg-alt);
+    border-color: var(--accent-light);
   }
 
   .step-number {
