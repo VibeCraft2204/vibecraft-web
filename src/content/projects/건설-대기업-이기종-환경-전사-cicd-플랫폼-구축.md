@@ -12,10 +12,12 @@ notion_id: "31055bb2-024a-810a-b56a-ee42e3ba5bbf"
 featured: false
 ---
 ## 📖 상세 내용
-프로젝트 개요
+
+**프로젝트 개요**
 SVN + 수동 배포 환경에 GitLab CI/CD를 도입하여, Java/C#, Linux/Windows 혼재 환경에서
 6개 팀 50명+ 개발자 대상 통합 파이프라인 템플릿을 설계했습니다.
-주요 성과
+
+**주요 성과**
 - SVN + 수동 배포 → GitLab CI/CD 전환, 6개 팀 50명+ 대상
 - Java/C#, Linux/Windows 이기종 통합 CI/CD 템플릿 설계
 - Nexus 기반 공통 빌드 환경으로 개별 서버 의존성 제거

@@ -12,10 +12,12 @@ notion_id: "31055bb2-024a-811b-9f64-ef81f20291b7"
 featured: false
 ---
 ## 📖 상세 내용
-프로젝트 개요
+
+**프로젝트 개요**
 VDI 리소스 부족으로 빌드조차 불가능했던 환경을 Kubernetes 기반 개인 개발환경으로 전환했습니다.
 동적 와일드카드 도메인(*.dev.example.com)으로 10명 개발자별 독립 환경을 제공하고, JetBrains Remote Debug를 지원했습니다.
-주요 성과
+
+**주요 성과**
 - VDI 빌드 불가 환경 → K8s 기반 개인 개발환경 전환 (10명 개발자)
 - 동적 와일드카드 도메인 + JetBrains Remote Debug로 개발 경험 혁신
 - 고객사 L4 스위치 환경에 맞춰 MetalLB → NodePort 기반으로 아키텍처 현장 적응

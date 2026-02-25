@@ -12,10 +12,12 @@ notion_id: "31055bb2-024a-8178-bda5-e57a38e9d74d"
 featured: true
 ---
 ## 📖 상세 내용
-프로젝트 개요
+
+**프로젝트 개요**
 Jenkins 기반 100+ 프로젝트를 GitLab CI/CD로 마이그레이션했습니다.
 OS(Linux/Windows), 빌드시스템(Java/C), 배포방식(SSH/Kubernetes/Docker) 조합별 표준 템플릿 체계를 설계했습니다.
-주요 성과
+
+**주요 성과**
 - Jenkins 기반 100+ 프로젝트 → GitLab CI/CD 마이그레이션
 - OS/빌드시스템/배포방식 조합별 표준 템플릿 체계 설계, 50명+ 개발자 대상
 - Java JDK 버전별 Dockerfile 작성 및 Kaniko 기반 컨테이너 빌드

@@ -11,10 +11,12 @@ notion_id: "31055bb2-024a-8188-9daf-f56f1ec5b95f"
 featured: false
 ---
 ## 📖 상세 내용
-프로젝트 개요
+
+**프로젝트 개요**
 MikroTik BGP+ECMP 네트워크, Cilium Gateway API, GPU 노드까지
 프로덕션급 Kubernetes 클러스터를 직접 구축한 사이드 프로젝트입니다.
-주요 성과
+
+**주요 성과**
 - 3 노드 베어메탈 클러스터 (Control Plane + Workers + RTX 3060)
 - MikroTik BGP + ECMP 기반 고가용성 네트워크
 - Cilium Gateway API (hostNetwork) + VIP 172.30.1.7

@@ -12,9 +12,11 @@ notion_id: "31055bb2-024a-81cd-8f66-d55f907b64b9"
 featured: false
 ---
 ## 📖 상세 내용
-프로젝트 개요
+
+**프로젝트 개요**
 국내 데이터 저장 규제 대응을 위해 GitLab SaaS에서 NCP Self-Managed로 마이그레이션을 단독 수행했습니다.
-주요 성과
+
+**주요 성과**
 - GitLab SaaS → NCP Self-Managed 마이그레이션 단독 수행
 - NCP 인프라 설계부터 전환까지 End-to-End 완료
 - SaaS 유지 상태에서 백업/복원 기반 무중단 전환

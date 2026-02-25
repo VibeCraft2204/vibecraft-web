@@ -12,10 +12,12 @@ notion_id: "31055bb2-024a-81d1-acdd-e68169fef1c9"
 featured: false
 ---
 ## 📖 상세 내용
-프로젝트 개요
+
+**프로젝트 개요**
 SSH 기반 배포 환경을 NKS + ArgoCD GitOps 체계로 전환했습니다.
 애플리케이션 컨테이너화를 통해 배포 패키징을 표준화하고 이미지 단위 즉시 롤백이 가능한 안정성을 확보했습니다.
-주요 성과
+
+**주요 성과**
 - SSH 배포 → NKS + ArgoCD GitOps 전환 (2개 팀 10명)
 - 애플리케이션 컨테이너화로 배포 패키징 표준화 및 이미지 단위 즉시 롤백
 - Kustomize Overlay로 환경별 배포 관리 (Dev/Staging/Prod)

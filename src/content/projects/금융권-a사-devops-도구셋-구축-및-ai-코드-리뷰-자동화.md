@@ -12,10 +12,12 @@ notion_id: "31055bb2-024a-812a-9d89-c00d9e5ad587"
 featured: true
 ---
 ## 📖 상세 내용
-프로젝트 개요
+
+**프로젝트 개요**
 SVN + ChangeFlow 환경을 GitLab 기반으로 전환하여 5개 팀 100명+ 개발자 대상 DevOps 도구셋을 설계했습니다.
 ITSM 통제 환경(squash/rebase/force push 금지)에 맞는 Git 전략을 수립하고, 47개 시나리오 기반 운영 가이드를 작성했습니다.
-주요 성과
+
+**주요 성과**
 - 5개 팀 100명+ 개발자 대상 DevOps 도구셋 설계
 - ITSM 통제 환경에 맞는 Git 전략 수립 및 47개 시나리오 운영 가이드 작성
 - Left Shift 코드 품질 3종 검사 (CodePrism, Clarity, Fortify)

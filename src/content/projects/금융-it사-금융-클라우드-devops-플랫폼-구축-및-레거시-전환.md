@@ -11,10 +11,12 @@ notion_id: "31055bb2-024a-8152-8d70-ee808b39cc08"
 featured: false
 ---
 ## 📖 상세 내용
-프로젝트 개요
+
+**프로젝트 개요**
 SVN + Change Flow 파일 단위 배포 환경을 에어갭 GitLab CI/CD로 전환했습니다.
 기존 프라이빗 클라우드 인프라 위에 DevOps 도구셋을 구축하고 온프레미스 GitLab Runner를 연동하여 5개 팀 50명 개발자 대상으로 운영하고 있습니다.
-주요 성과
+
+**주요 성과**
 - 기존 프라이빗 클라우드에 DevOps 도구셋 구축 + 온프레미스 Runner 연동, 5개 팀 50명 대상
 - SVN + Change Flow 파일 단위 배포 → GitLab Runner CI/CD 전환
 - Helm Chart 해시, 컨테이너 Digest 검증 기반 이미지 무결성 체계
