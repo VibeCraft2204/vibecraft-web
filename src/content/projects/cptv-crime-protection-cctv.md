@@ -7,6 +7,7 @@ tech: [Python, Raspberry Pi, TensorFlow]
 team: []
 period_start: 2021-01-01
 period_end: 2021-09-21
+cover: "../../assets/covers/industry/research.png"
 notion_id: "2f855bb2-024a-8142-a256-d13d9bfb7e64"
 featured: false
 ---

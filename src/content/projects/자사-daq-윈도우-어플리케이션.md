@@ -7,7 +7,7 @@ tech: [C++, MFC]
 team: []
 period_start: 2021-01-04
 period_end: 2021-02-26
-cover: "../../assets/covers/자사-daq-윈도우-어플리케이션.png"
+cover: "../../assets/covers/industry/iot-manufacturing.png"
 notion_id: "2f855bb2-024a-8163-9dca-f0bec565297d"
 featured: false
 ---

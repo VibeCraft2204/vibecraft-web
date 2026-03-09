@@ -7,7 +7,7 @@ tech: [Python, TensorFlow]
 team: []
 period_start: 2021-04-01
 period_end: 2021-08-26
-cover: "../../assets/covers/ocr-바코드-리더기-sw-및-hw-제작.png"
+cover: "../../assets/covers/industry/iot-manufacturing.png"
 notion_id: "2f855bb2-024a-819d-a4f1-cc13d978c719"
 featured: false
 ---

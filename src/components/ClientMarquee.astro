@@ -1,0 +1,127 @@
+---
+import { clients } from '../data/clients';
+---
+
+<section class="client-strip" aria-label="고객사 목록">
+  <div class="strip-track">
+    <div class="strip-content">
+      {clients.map((client) => (
+        <img
+          class="strip-logo"
+          src={client.logo}
+          alt={client.name}
+          loading="lazy"
+          width="100"
+          height="32"
+        />
+      ))}
+    </div>
+    <div class="strip-content" aria-hidden="true">
+      {clients.map((client) => (
+        <img
+          class="strip-logo"
+          src={client.logo}
+          alt=""
+          loading="lazy"
+          width="100"
+          height="32"
+        />
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .client-strip {
+    background: var(--dark-bg);
+    padding: 32px 0;
+    overflow: hidden;
+    border-bottom: 1px solid var(--dark-border);
+  }
+
+  .strip-track {
+    display: flex;
+    width: max-content;
+    animation: strip-scroll 40s linear infinite;
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent,
+      black 15%,
+      black 85%,
+      transparent
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      black 15%,
+      black 85%,
+      transparent
+    );
+  }
+
+  .strip-content {
+    display: flex;
+    align-items: center;
+    gap: 80px;
+    padding: 0 40px;
+    flex-shrink: 0;
+  }
+
+  .strip-logo {
+    height: 24px;
+    width: auto;
+    object-fit: contain;
+    filter: grayscale(1) brightness(0.6) invert(1);
+    opacity: 0.15;
+    transition: opacity 0.6s var(--ease-out);
+  }
+
+  .client-strip:hover .strip-logo {
+    opacity: 0.3;
+  }
+
+  .client-strip:hover .strip-track {
+    animation-play-state: paused;
+  }
+
+  @keyframes strip-scroll {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .strip-track {
+      animation: none;
+      justify-content: center;
+      width: auto;
+      -webkit-mask-image: none;
+      mask-image: none;
+    }
+
+    .strip-content:last-child {
+      display: none;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .client-strip {
+      padding: 24px 0;
+    }
+
+    .strip-logo {
+      height: 20px;
+    }
+
+    .strip-content {
+      gap: 56px;
+    }
+
+    .strip-track {
+      animation-duration: 28s;
+    }
+  }
+</style>

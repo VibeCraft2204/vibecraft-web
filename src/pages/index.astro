@@ -6,6 +6,7 @@ import ServiceCard from '../components/ServiceCard.astro';
 import Stats from '../components/Stats.astro';
 import ProcessStep from '../components/ProcessStep.astro';
 import { services } from '../data/services';
+import ClientMarquee from '../components/ClientMarquee.astro';
 
 const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 
@@ -247,6 +248,9 @@ const process = [
       </div>
     </div>
   </section>
+
+  <!-- Client Logos -->
+  <ClientMarquee />
 </PageLayout>
 
 <script>

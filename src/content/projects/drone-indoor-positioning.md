@@ -7,6 +7,7 @@ tech: [Python, C/C++, Raspberry Pi]
 team: []
 period_start: 2020-03-02
 period_end: 2020-06-25
+cover: "../../assets/covers/industry/research.png"
 notion_id: "2f855bb2-024a-81ad-baeb-eca8f9d986da"
 featured: false
 ---

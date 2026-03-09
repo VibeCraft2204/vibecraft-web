@@ -7,7 +7,7 @@ tech: [C++, Python]
 team: []
 period_start: 2021-02-02
 period_end: 2021-03-25
-cover: "../../assets/covers/자사-daq-dll-개발.png"
+cover: "../../assets/covers/industry/iot-manufacturing.png"
 notion_id: "2f855bb2-024a-8103-b0d0-d7139b4bd351"
 featured: false
 ---

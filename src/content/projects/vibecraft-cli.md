@@ -7,6 +7,7 @@ tech: [Python]
 team: []
 period_start: 2025-06-02
 period_end: 2025-12-18
+cover: "../../assets/covers/industry/ai-data.png"
 notion_id: "2f855bb2-024a-8184-8311-c6155b30171e"
 featured: false
 ---

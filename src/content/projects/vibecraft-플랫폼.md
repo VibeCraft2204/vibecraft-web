@@ -7,6 +7,7 @@ tech: [Python, FastAPI, Git, Github Action, Docker]
 team: []
 period_start: 2025-06-02
 period_end: 2025-12-02
+cover: "../../assets/covers/industry/ai-data.png"
 notion_id: "2f855bb2-024a-8195-968b-d67fa59753a6"
 featured: false
 ---
